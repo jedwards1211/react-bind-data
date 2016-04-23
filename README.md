@@ -1,15 +1,5 @@
-# react-library-skeleton
+# react-formalities
 
-This is my personal skeleton for creating a React library component npm module.  You are welcome to use it.
+Skip the formalities when hooking up change callbacks to form inputs and other components!
 
-## Tools used
-
-* babel 6
-* karma
-* karma-webpack
-* jasmine
-* enzyme
-* eslint
-* flow
-
-The `prepublish` script checks the output of `eslint`, `flow`, and `karma`.
+(work in progress)
