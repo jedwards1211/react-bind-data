@@ -7,6 +7,7 @@ import AutoformSandbox from '../src/lib/AutoformSandbox.js';
 const MyComp = (props) => <Autoform {...props} data={props}>
   <form>
     <input type="text" name="title"/>
+    <h1>{props.title}</h1>
     <fieldset name="name">
       <input type="text" name="first"/>
       <input type="text" name="last"/>
@@ -15,6 +16,6 @@ const MyComp = (props) => <Autoform {...props} data={props}>
   </form>
 </Autoform>;
 
-ReactDOM.render(<AutoformSandbox initState={{title: 'Hello World'}}>
+ReactDOM.render(<AutoformSandbox initState={{title: 'Hello World', name: {first: '', last: ''}}}>
   <MyComp/>
 </AutoformSandbox>, document.getElementById('root'));

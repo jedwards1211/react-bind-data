@@ -10,7 +10,7 @@ type DefaultProps = {
   data: Object,
   getInData: (data: any, path: any[]) => mixed,
   getInMetadata: (metadata: any, path: any[]) => mixed,
-  onFieldChange?: (path: any[], newValue: any) => any,
+  onFieldChange: (path: any[], newValue: any) => any,
 };
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
   metadata?: Object,
   getInMetadata: (metadata: any, path: any[]) => mixed,
   omnidata?: Object,
-  onFieldChange?: (path: any[], newValue: any) => any,
+  onFieldChange: (path: any[], newValue: any) => any,
   children?: mixed,
 };
 
@@ -43,6 +43,7 @@ export default class Autoform extends Component<DefaultProps,Props,void> {
         if ('production' !== process.env.NODE_ENV) {
           warning(name == null || 
               typeof name === 'string' || typeof name === 'number' ||
+              // flow-issue(react-formalities)
               typeof name === 'symbol' || name instanceof Array,
             "props.name should be a string or number in descendant: ", child);
           
@@ -54,6 +55,7 @@ export default class Autoform extends Component<DefaultProps,Props,void> {
               let name = autoformProps[prop];
               warning(name == null ||
                 typeof name === 'string' || typeof name === 'number' ||
+                // flow-issue(react-formalities)
                 typeof name === 'symbol' || name instanceof Array,
                 `props.autoformProps[${prop}] should be a string, number, Symbol, or Array in descendant: `, child);
             }
@@ -87,7 +89,7 @@ export default class Autoform extends Component<DefaultProps,Props,void> {
                 let onChange = `on${upperFirst(prop)}`;
                 let wrappedOnChange = child.props[onChange];
                 newProps[onChange] = (newValue, ...args) => {
-                  wrappedOnChange && wrappedOnChange(...args);
+                  wrappedOnChange && wrappedOnChange(newValue, ...args);
                   onFieldChange(propPath, newValue);
                 };
               }
@@ -107,7 +109,7 @@ export default class Autoform extends Component<DefaultProps,Props,void> {
   }
 
   render(): React.Element {
-    let {onChange, props: {children}} = this;
+    let {props: {children}} = this;
 
     let content = this.bindFields(children)[0];
     let wrappedRef = content.ref;
