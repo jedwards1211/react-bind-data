@@ -1,6 +1,6 @@
 var path = require('path');
 
-var ProgressBarPlugin = require('progress-bar-webpack-plugin');
+var webpackConfig = require('./webpack.config.test');
 
 module.exports = function(config) {
   config.set({
@@ -29,42 +29,9 @@ module.exports = function(config) {
       require('karma-safari-launcher')
     ],
 
-    webpack: {
-      devtool: 'inline-source-map',
-      resolve: {
-        extensions: ['', '.js', '.json']
-      },
-      module: {
-        loaders: [
-          {
-            test: /\.js$/,
-            loader: 'babel',
-            exclude: path.resolve(__dirname, 'node_modules')
-          },
-          {
-            test: /\.json$/,
-            loader: 'json'
-          }
-        ]
-      },
-      externals: {
-        cheerio: 'window',
-        'react/addons': true,
-        'react/lib/ExecutionEnvironment': true,
-        'react/lib/ReactContext': true
-      },
-      plugins: [
-        new ProgressBarPlugin()
-      ]
-    },
+    webpack: webpackConfig,
 
-    webpackMiddleware: {
-      stats: {
-        colors: true,
-        chunkModules: false,
-        modules: false
-      } 
-    },
+    webpackMiddleware: webpackConfig.devServer,
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor

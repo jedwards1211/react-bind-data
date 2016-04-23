@@ -6,7 +6,8 @@
   "scripts": {
     "test": "karma start",
     "lint": "eslint src test",
-    "prepublish": "eslint src && flow status && karma start --single-run && (rm -rf dist; NODE_ENV=production babel src --out-dir dist)"
+    "prepublish": "eslint src && flow status && karma start --single-run && (rm -rf dist; NODE_ENV=production babel src --out-dir dist)",
+    "sandbox": "webpack-dev-server --config webpack.config.dev.js"
   },
   "repository": {
     "type": "git",
