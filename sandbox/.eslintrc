@@ -1,0 +1,23 @@
+{
+  "parser": "babel-eslint",
+  "extends": "eslint:recommended",
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true,
+    "experimentalObjectRestSpread": true
+  },
+  "rules": {
+    "comma-dangle": 0,
+    "strict": 0,
+    "no-unused-vars": [1, {"args": "none", "varsIgnorePattern": "React"}],
+    "no-console": 0,
+    "react/react-in-jsx-scope": 1
+  },
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "plugins": [
+    "react"
+  ]
+}
