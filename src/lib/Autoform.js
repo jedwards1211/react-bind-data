@@ -10,6 +10,7 @@ type DefaultProps = {
   data: Object,
   getInData: (data: any, path: any[]) => mixed,
   getInMetadata: (metadata: any, path: any[]) => mixed,
+  onFieldChange?: (path: any[], newValue: any) => any,
 };
 
 type Props = {
@@ -18,7 +19,7 @@ type Props = {
   metadata?: Object,
   getInMetadata: (metadata: any, path: any[]) => mixed,
   omnidata?: Object,
-  onChange?: (e: Object) => any,
+  onFieldChange?: (path: any[], newValue: any) => any,
   children?: mixed,
 };
 
@@ -26,13 +27,14 @@ export default class Autoform extends Component<DefaultProps,Props,void> {
   static defaultProps = {
     data: {},
     getInData: get,
-    getInMetadata: get
+    getInMetadata: get,
+    onFieldChange() {}
   };
   
   root: ?any;
 
   bindFields(children: any, path?: any[] = []): any {
-    let {data, getInData, metadata, getInMetadata, omnidata} = this.props;
+    let {data, getInData, metadata, getInMetadata, onFieldChange, omnidata} = this.props;
 
     return Children.map(children, (child: mixed) => {
       if (child instanceof Object && child.props) {
@@ -44,7 +46,9 @@ export default class Autoform extends Component<DefaultProps,Props,void> {
               typeof name === 'symbol' || name instanceof Array,
             "props.name should be a string or number in descendant: ", child);
           
-          warning(autoformProps instanceof Object, "props.autoformProps should be an Object in descendant: ", child);
+          warning(autoformProps == null || autoformProps instanceof Object, 
+            "props.autoformProps should be an Object in descendant: ", child);
+          
           if (autoformProps instanceof Object) {
             for (let prop in autoformProps) {
               let name = autoformProps[prop];
@@ -71,24 +75,22 @@ export default class Autoform extends Component<DefaultProps,Props,void> {
             }
             newProps[prop] = getInData(data, propPath);
 
-            if (prop === 'value') {
-              let wrappedOnChange = child.props.onChange;
-              newProps.onChange = (e: any, ...args) => {
-                wrappedOnChange && wrappedOnChange(e, ...args);
-              };
-            }
-            else {
-              let onChange = `on${upperFirst(prop)}`;
-              let wrappedOnChange = child.props[onChange];
-              newProps[onChange] = (e: any, ...args) => {
-                wrappedOnChange && wrappedOnChange(e, ...args);
-                if (e instanceof Event) {
-                  this.onChange(e);
-                }
-                else {
-                  let {onChange} = this.props;
-                }
-              };
+            if (!children) {
+              if (prop === 'value') {
+                let wrappedOnChange = child.props.onChange;
+                newProps.onChange = (e:any) => {
+                  wrappedOnChange && wrappedOnChange(e);
+                  onFieldChange(propPath, e && e.target ? e.target.value : e);
+                };
+              }
+              else {
+                let onChange = `on${upperFirst(prop)}`;
+                let wrappedOnChange = child.props[onChange];
+                newProps[onChange] = (newValue, ...args) => {
+                  wrappedOnChange && wrappedOnChange(...args);
+                  onFieldChange(propPath, newValue);
+                };
+              }
             }
           }
         }
@@ -113,8 +115,7 @@ export default class Autoform extends Component<DefaultProps,Props,void> {
       ref: c => {
         wrappedRef && wrappedRef(c);
         this.root = c;
-      },
-      onChange
+      }
     });
   }
 }

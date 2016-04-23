@@ -3,7 +3,7 @@
 import React from 'react';
 import {mount} from 'enzyme';
 
-import Autobind from '../../../../lib/Autoform.jsx';
+import Autobind from '../../../../lib/Autoform.js';
 import Pager from '../../../../common/Pager.jsx';
 
 describe('Autobind', () => {
