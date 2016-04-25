@@ -1,11 +1,27 @@
 # react-bind-data
 
+```jsx
+import BindData from 'react-bind-data';
+```
+
 (work in progress)
 
 ## How it works
 
-`BindData` recursively clones it children looking for those with a `name` prop or `bindDataProps` prop.  When nested
-components with `name` props are given, it treats them as a path and uses the value from `data` at that path.
+`BindData` recursively clones it children.  For each that has a `name` prop, it injects `value={data[name]}` and an
+`onChange` handler that will call the `BindData`'s `onFieldChange` prop.  For each that has a `bindDataProps` prop,
+it will inject `<key>={data[bindDataProps[<key>]]}` and an `on<Key>Change` handler.
+
+When nested components with `name` props are given, it treats them as a path and uses the value from `data`
+at that path.  So in the following, `BindData` will inject `value={_.get(data, ['address', 'city'])}`:
+
+```jsx
+<BindData data={data} onFieldChange={...}>
+  <fieldset name="address">
+    <input name="city" type="text"/>
+  </fieldset>
+</BindData>
+```
 
 This means it works naturally with forms.  However, you can use it with any elements -- just put `name` or
 `bindDataProps` on those elements, even if they don't use those properties themselves.
