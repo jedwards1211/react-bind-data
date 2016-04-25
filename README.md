@@ -7,20 +7,36 @@
 `BindData` recursively clones it children looking for those with a `name` prop or `bindDataProps` prop.  When nested
 components with `name` props are given, it treats them as a path and uses the value from `data` at that path.
 
+This means it works naturally with forms.  However, you can use it with any elements -- just put `name` or
+`bindDataProps` on those elements, even if they don't use those properties themselves.
+
 Since it recursively clones its children, it can't look inside children that are higher order components.  However,
 it doesn't prevent you from passing in props manually in cases where `BindData` is unable to do so itself.
 
+## More boilerplate
+
+(coming soon)
+
+Any time a bound component calls its `onChange`, `BindData` calls its `onFieldChange` with the path within `data`
+that was changed and the new value.  This project will provide a cookie-cutter `onFieldChange` handler that dispatches
+Redux actions and Redux reducers that handle those events for POJO and Immutable.js state trees.  There is also a
+`BindDataSandbox` component for testing your form during development that handles the state updates itself.
+
 ## Example
 
-`BindData` will automatically inject `value` props from `data`, and `validation` props from
+`BindData` will automatically inject `value` props from `data`, and (in this case) `validation` props from
 `metadata.validation`, based upon the path of `name` props.
 
 It will also pass in `onChange` handlers to the inputs, and it will call `onFieldChange`.  If the city of
 the first address is changed to 'Austin', for instance, it will call
 `onFieldChange(['addresses', 0, 'city'], 'Austin')`.
 
-
 ```jsx
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+
+  import BindData from 'react-bind-data';
+
   let data = {
     name: {
       firstName: 'Andy',
@@ -50,7 +66,7 @@ the first address is changed to 'Austin', for instance, it will call
 
   function onFieldChange() { console.log(...arguments); }
 
-  const Form = () => <BindData data={data} metadata={metadata} onFieldChange={onFieldChange}>
+  ReactDOM.render(<BindData data={data} metadata={metadata} onFieldChange={onFieldChange}>
     <form>
       <fieldset name="name">
         <input type="text" name="firstName" placeholder="First Name"/>
@@ -63,5 +79,5 @@ the first address is changed to 'Austin', for instance, it will call
         </fieldset>
       </fieldset>
     </form>
-  </BindData>;
+  </BindData>, document.getElementById('root'));
 ```
