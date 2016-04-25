@@ -13,7 +13,7 @@ This means it works naturally with forms.  However, you can use it with any elem
 Since it recursively clones its children, it can't look inside children that are higher order components.  However,
 it doesn't prevent you from passing in props manually in cases where `BindData` is unable to do so itself.
 
-## More boilerplate
+## More boilerplate/Redux integration
 
 (coming soon)
 
