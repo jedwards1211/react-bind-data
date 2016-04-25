@@ -1,7 +1,7 @@
 {
-  "name": "react-formalities",
-  "version": "1.0.0",
-  "description": "skip the formalities (boilerplate) in forms and any components with change callbacks",
+  "name": "react-bind-data",
+  "version": "1.0.0-beta1",
+  "description": "a component that hooks up value, onChange, and other props automatically",
   "main": "dist/index.js",
   "scripts": {
     "test": "karma start",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jedwards1211/react-formalities.git"
+    "url": "git+https://github.com/jedwards1211/react-bind-data.git"
   },
   "keywords": [
     "react"
@@ -19,9 +19,9 @@
   "author": "Andy Edwards",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jedwards1211/react-formalities/issues"
+    "url": "https://github.com/jedwards1211/react-bind-data/issues"
   },
-  "homepage": "https://github.com/jedwards1211/react-formalities#readme",
+  "homepage": "https://github.com/jedwards1211/react-bind-data#readme",
   "peerDependencies": {
     "react": "^15.0.0",
     "classnames": "^2.0.0"

@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import set from 'lodash.set';
 import cloneDeep from 'lodash.clonedeep';
 
-export default class AutoformSandbox extends Component {
+export default class BindDataSandbox extends Component {
   constructor(props) {
     super(props);
     this.state = props.initState || {};

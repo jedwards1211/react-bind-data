@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Autoform from '../src/lib/Autoform.js';
-import AutoformSandbox from '../src/lib/AutoformSandbox.js';
+import BindData from '../src/lib/BindData.js';
+import BindDataSandbox from '../src/lib/BindDataSandbox.js';
 
-const MyComp = (props) => <Autoform {...props} data={props}>
+const MyComp = (props) => <BindData {...props} data={props}>
   <form>
     <input type="text" name="title"/>
     <h1>{props.title}</h1>
@@ -14,8 +14,8 @@ const MyComp = (props) => <Autoform {...props} data={props}>
     </fieldset>
     <input type="text" name={['name', 'last']}/>
   </form>
-</Autoform>;
+</BindData>;
 
-ReactDOM.render(<AutoformSandbox initState={{title: 'Hello World', name: {first: '', last: ''}}}>
+ReactDOM.render(<BindDataSandbox initState={{title: 'Hello World', name: {first: '', last: ''}}}>
   <MyComp/>
-</AutoformSandbox>, document.getElementById('root'));
+</BindDataSandbox>, document.getElementById('root'));

@@ -1,7 +1,6 @@
 /* @flow */
 
 import React, {Component, Children} from 'react';
-import {findDOMNode} from 'react-dom';
 import get from 'lodash.get';
 import upperFirst from 'lodash.upperfirst';
 import warning from './warning';
@@ -23,7 +22,7 @@ type Props = {
   children?: mixed,
 };
 
-export default class Autoform extends Component<DefaultProps,Props,void> {
+export default class BindData extends Component<DefaultProps,Props,void> {
   static defaultProps = {
     data: {},
     getInData: get,
@@ -38,7 +37,7 @@ export default class Autoform extends Component<DefaultProps,Props,void> {
 
     return Children.map(children, (child: mixed) => {
       if (child instanceof Object && child.props) {
-        let {children, autoformProps, name} = (child.props: Object);
+        let {children, bindDataProps, name} = (child.props: Object);
 
         if ('production' !== process.env.NODE_ENV) {
           warning(name == null || 
@@ -47,17 +46,17 @@ export default class Autoform extends Component<DefaultProps,Props,void> {
               typeof name === 'symbol' || name instanceof Array,
             "props.name should be a string or number in descendant: ", child);
           
-          warning(autoformProps == null || autoformProps instanceof Object, 
-            "props.autoformProps should be an Object in descendant: ", child);
+          warning(bindDataProps == null || bindDataProps instanceof Object,
+            "props.bindDataProps should be an Object in descendant: ", child);
           
-          if (autoformProps instanceof Object) {
-            for (let prop in autoformProps) {
-              let name = autoformProps[prop];
+          if (bindDataProps instanceof Object) {
+            for (let prop in bindDataProps) {
+              let name = bindDataProps[prop];
               warning(name == null ||
                 typeof name === 'string' || typeof name === 'number' ||
                 // flow-issue(react-formalities)
                 typeof name === 'symbol' || name instanceof Array,
-                `props.autoformProps[${prop}] should be a string, number, Symbol, or Array in descendant: `, child);
+                `props.bindDataProps[${prop}] should be a string, number, Symbol, or Array in descendant: `, child);
             }
           }
         }
@@ -65,10 +64,10 @@ export default class Autoform extends Component<DefaultProps,Props,void> {
         let newProps = {};
         Object.assign(newProps, omnidata);
 
-        if (name) autoformProps = Object.assign({}, autoformProps, {value: name});
-        if (autoformProps) {
-          for (let prop in autoformProps) {
-            let name = autoformProps[prop];
+        if (name) bindDataProps = Object.assign({}, bindDataProps, {value: name});
+        if (bindDataProps) {
+          for (let prop in bindDataProps) {
+            let name = bindDataProps[prop];
 
             let propPath = path.concat(name);
             for (let prop in metadata) {
@@ -86,7 +85,7 @@ export default class Autoform extends Component<DefaultProps,Props,void> {
                 };
               }
               else {
-                let onChange = `on${upperFirst(prop)}`;
+                let onChange = `on${upperFirst(prop)}Change`;
                 let wrappedOnChange = child.props[onChange];
                 newProps[onChange] = (newValue, ...args) => {
                   wrappedOnChange && wrappedOnChange(newValue, ...args);
