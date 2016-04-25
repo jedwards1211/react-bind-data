@@ -3,7 +3,7 @@
 import React, {Component, Children} from 'react';
 import get from 'lodash.get';
 import upperFirst from 'lodash.upperfirst';
-import warning from './warning';
+import warning from './lib/warning';
 
 type DefaultProps = {
   data: Object,

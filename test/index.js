@@ -3,7 +3,7 @@
 import React from 'react';
 import {mount} from 'enzyme';
 
-import BindData from '../src/lib/BindData';
+import BindData from '../src';
 import Pager from './Pager';
 
 describe('BindData', () => {

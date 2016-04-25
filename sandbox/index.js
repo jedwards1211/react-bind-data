@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import BindData from '../src/lib/BindData.js';
+import BindData from '../src/index.js';
 import BindDataSandbox from '../src/lib/BindDataSandbox.js';
 
 const MyComp = (props) => <BindData {...props} data={props}>
