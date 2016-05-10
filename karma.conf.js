@@ -1,6 +1,4 @@
-var path = require('path');
-
-var webpackConfig = require('./webpack.config.test');
+var webpackConfig = require('./webpack.config.test')
 
 module.exports = function(config) {
   config.set({
@@ -75,4 +73,4 @@ module.exports = function(config) {
     // how many browser should be started simultanous
     concurrency: Infinity
   })
-};
+}
