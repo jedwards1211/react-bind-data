@@ -5,9 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "karma start",
-    "lint": "eslint *.js src test; exit 0",
-    "lint:fix": "eslint *.js src test --fix; exit 0",
-    "prepublish": "eslint *.js src test --fix && flow status && karma start --single-run && (rm -rf dist; NODE_ENV=production babel src --out-dir dist)",
+    "lint": "eslint *.js src test examples; exit 0",
+    "lint:fix": "eslint *.js src test examples --fix; exit 0",
+    "build": "rm -rf dist; NODE_ENV=production babel src --out-dir dist",
+    "prepublish": "eslint *.js src test examples --fix && flow status && karma start --single-run && npm run build",
     "sandbox": "webpack-dev-server --config webpack.config.dev.js"
   },
   "repository": {

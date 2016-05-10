@@ -1,7 +1,7 @@
 import React from 'react'
 import {mount} from 'enzyme'
 
-import HelloWorld from '../src'
+import HelloWorld from '../src/index'
 
 describe('HelloWorld', () => {
   it("can be rendered", () => {
