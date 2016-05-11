@@ -19,7 +19,7 @@
     "react"
   ],
   "author": "Andy Edwards",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/jedwards1211/react-library-skeleton/issues"
   },
