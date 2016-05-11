@@ -1,4 +1,4 @@
 /* @flow */
 
-import HelloWorld from './lib/HelloWorld'
+import HelloWorld from './HelloWorld'
 export default HelloWorld
