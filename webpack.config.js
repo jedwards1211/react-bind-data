@@ -3,6 +3,9 @@ var ProgressBarPlugin = require('progress-bar-webpack-plugin')
 
 module.exports = {
   devtool: 'source-map',
+  entry: [
+    'babel-polyfill'
+  ],
   resolve: {
     extensions: ['', '.js', '.json']
   },
