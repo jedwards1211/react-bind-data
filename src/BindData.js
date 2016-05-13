@@ -50,7 +50,7 @@ export default class BindData extends Component<DefaultProps, Props, void> {
         if ('production' !== process.env.NODE_ENV) {
           warning(name == null ||
               typeof name === 'string' || typeof name === 'number' ||
-              // flow-issue(react-formalities)
+              // flow-issue(react-bind-data)
               typeof name === 'symbol' || name instanceof Array,
             "props.name should be a string or number in descendant: ", child)
 
@@ -62,7 +62,7 @@ export default class BindData extends Component<DefaultProps, Props, void> {
               let name = bindDataProps[prop]
               warning(name == null ||
                 typeof name === 'string' || typeof name === 'number' ||
-                // flow-issue(react-formalities)
+                // flow-issue(react-bind-data)
                 typeof name === 'symbol' || name instanceof Array,
                 `props.bindDataProps[${prop}] should be a string, number, Symbol, or Array in descendant: `, child)
             }
