@@ -1,6 +1,6 @@
 {
   "name": "react-bind-data",
-  "version": "1.0.0-beta4",
+  "version": "1.0.0-beta5",
   "description": "a component that hooks up value, onChange, and other props automatically",
   "main": "lib/index.js",
   "scripts": {
@@ -25,8 +25,7 @@
   },
   "homepage": "https://github.com/jedwards1211/react-bind-data#readme",
   "peerDependencies": {
-    "react": "0.14.x || ^15.0.0",
-    "classnames": "^2.0.0"
+    "react": "0.14.x || ^15.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.8.0",
