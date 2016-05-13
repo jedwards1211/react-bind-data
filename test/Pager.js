@@ -1,7 +1,7 @@
 /* @flow */
 
-import React, {Component} from 'react';
-import classNames from 'classnames';
+import React, {Component, PropTypes} from 'react'
+import classNames from 'classnames'
 
 type DefaultProps = {
   numButtons: number,
@@ -19,30 +19,39 @@ type Props = {
   numButtons: number
 };
 
-export default class Pager extends Component<DefaultProps,Props,void> {
+export default class Pager extends Component<DefaultProps, Props, void> {
+  static propTypes = {
+    className: PropTypes.string,
+    page: PropTypes.number,
+    onPageChange: PropTypes.func,
+    offset: PropTypes.number.isRequired,
+    onOffsetChange: PropTypes.func,
+    numPages: PropTypes.number.isRequired,
+    numButtons: PropTypes.number.isRequired
+  };
   static defaultProps = {
     numButtons: 5,
     onPageChange() {},
     onOffsetChange() {}
   };
   setOffset: (offset: number) => void = offset => {
-    let {onOffsetChange, numButtons, numPages} = this.props;
-    onOffsetChange(Math.max(0, Math.min(numPages - numButtons, offset)));
+    let {onOffsetChange, numButtons, numPages} = this.props
+    onOffsetChange(Math.max(0, Math.min(numPages - numButtons, offset)))
   };
   render(): React.Element {
-    let {className, page, onPageChange, numPages, offset, numButtons} = this.props;
-    let {setOffset} = this;
+    let {className, page, onPageChange, numPages, offset, numButtons} = this.props
+    let {setOffset} = this
 
-    let buttons = [];
+    let buttons = []
 
     for (let otherPage = Math.max(0, offset); otherPage < offset + numButtons && otherPage < numPages; otherPage++) {
-      let content = otherPage + 1;
+      let content = otherPage + 1
       if (otherPage === page) {
-        content = <span>{otherPage + 1} <span className="sr-only">(current)</span></span>;
+        content = <span>{otherPage + 1} <span className="sr-only">(current)</span></span>
       }
       buttons.push(<li key={otherPage} className={otherPage === page ? 'active' : undefined}>
         <a onClick={() => onPageChange(otherPage)}>{content}</a>
-      </li>);
+      </li>)
     }
 
     if (numPages > numButtons) {
@@ -58,13 +67,13 @@ export default class Pager extends Component<DefaultProps,Props,void> {
             <span ariaHidden="true">&raquo;</span>
           </a>
         </li>
-      ];
+      ]
     }
 
-    className = classNames(className, 'pagination', 'noselect');
+    className = classNames(className, 'pagination', 'noselect')
 
-    return <ul {...this.props} className={className}>
+    return (<ul {...this.props} className={className}>
       {buttons}
-    </ul>;
+    </ul>)
   }
 }

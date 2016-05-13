@@ -1,11 +1,9 @@
-var path = require('path');
-
-var webpackConfig = require('./webpack.config.test');
+var webpackConfig = require('./webpack.config.test')
 
 module.exports = function(config) {
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: 'test',
+    basePath: __dirname,
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -13,7 +11,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'index.js'
+      'test/index.js'
     ],
 
     // list of files to exclude
@@ -36,7 +34,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'index.js': ['webpack', 'sourcemap']
+      'test/index.js': ['webpack', 'sourcemap']
     },
 
     // test results reporter to use
@@ -75,4 +73,4 @@ module.exports = function(config) {
     // how many browser should be started simultanous
     concurrency: Infinity
   })
-};
+}

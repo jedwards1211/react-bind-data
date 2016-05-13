@@ -1,6 +1,6 @@
-var path = require('path');
-var merge = require('webpack-merge');
-var webpack = require('webpack');
+var path = require('path')
+var merge = require('webpack-merge')
+var webpack = require('webpack')
 
 module.exports = merge(
   {
@@ -29,12 +29,12 @@ module.exports = merge(
         modules: false
       }
     }
-  }, 
-  require('./webpack.config'), 
+  },
+  require('./webpack.config'),
   {
     devtool: 'eval',
     entry: [
       path.join(__dirname, 'sandbox')
     ]
   }
-);
+)

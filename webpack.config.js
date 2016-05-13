@@ -1,8 +1,11 @@
-var path = require('path');
-var ProgressBarPlugin = require('progress-bar-webpack-plugin');
+var path = require('path')
+var ProgressBarPlugin = require('progress-bar-webpack-plugin')
 
 module.exports = {
   devtool: 'source-map',
+  entry: [
+    'babel-polyfill'
+  ],
   resolve: {
     extensions: ['', '.js', '.json']
   },
@@ -22,4 +25,4 @@ module.exports = {
   plugins: [
     new ProgressBarPlugin()
   ]
-};
+}
