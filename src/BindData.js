@@ -84,21 +84,20 @@ export default class BindData extends Component<DefaultProps, Props, void> {
             }
             newProps[prop] = getInData(data, propPath)
 
-            if (!children) {
-              if (prop === 'value') {
-                let wrappedOnChange = child.props.onChange
-                newProps.onChange = (e:any) => {
-                  wrappedOnChange && wrappedOnChange(e)
-                  onFieldChange(propPath, e && e.target ? e.target.value : e)
-                }
+            if (prop === 'value') {
+              let wrappedOnChange = child.props.onChange
+              newProps.onChange = (e:any) => {
+                wrappedOnChange && wrappedOnChange(e)
+                if (e && e.stopPropagation) e.stopPropagation()
+                onFieldChange(propPath, e && e.target ? e.target.value : e)
               }
-              else {
-                let onChange = `on${upperFirst(prop)}Change`
-                let wrappedOnChange = child.props[onChange]
-                newProps[onChange] = (newValue, ...args) => {
-                  wrappedOnChange && wrappedOnChange(newValue, ...args)
-                  onFieldChange(propPath, newValue)
-                }
+            }
+            else {
+              let onChange = `on${upperFirst(prop)}Change`
+              let wrappedOnChange = child.props[onChange]
+              newProps[onChange] = (newValue, ...args) => {
+                wrappedOnChange && wrappedOnChange(newValue, ...args)
+                onFieldChange(propPath, newValue)
               }
             }
           }
