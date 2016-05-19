@@ -43,8 +43,11 @@ export default class BindData extends Component<DefaultProps, Props, void> {
   bindFields(children: any, path?: any[] = []): any[] {
     let {data, getInData, metadata, getInMetadata, onFieldChange, omnidata} = this.props
 
-    return Children.map(children, (child: mixed) => {
-      if (child instanceof Object && child.props) {
+    let anyValid = false
+
+    const result = Children.map(children, (child: mixed) => {
+      if (React.isValidElement(child) && child instanceof Object && child.props) {
+        anyValid = true
         let {children, bindDataProps, name} = (child.props: Object)
 
         if ('production' !== process.env.NODE_ENV) {
@@ -112,6 +115,8 @@ export default class BindData extends Component<DefaultProps, Props, void> {
       }
       return child
     })
+
+    return anyValid ? result : children
   }
 
   render(): React.Element {
