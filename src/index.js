@@ -1,7 +1,7 @@
 /* @flow */
 
-import BindData from './BindData'
+import bindData from './bindData'
 import BindDataSandbox from './BindDataSandbox'
 
-export default BindData
-export {BindData, BindDataSandbox}
+export default bindData
+export {bindData, BindDataSandbox}
