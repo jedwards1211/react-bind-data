@@ -7,7 +7,7 @@ import {mount} from 'enzyme'
 import bindData from '../src'
 import Pager from './Pager'
 
-describe('BindData', () => {
+describe('bindData', () => {
   describe('basic use case', () => {
     let onFieldChange = jasmine.createSpy('onFieldChange')
 
@@ -53,6 +53,55 @@ describe('BindData', () => {
       })
     })
   })
+  describe('path use case', () => {
+    let onFieldChange = jasmine.createSpy('onFieldChange')
+
+    let data = bindData({
+      data: {
+        document: {
+          firstName: 'Andy',
+          lastName: 'Edwards'
+        }
+      },
+      metadata: {
+        validation: {
+          document: {
+            firstName: 'first name is OK!',
+            lastName: 'last name is OK!'
+          }
+        }
+      },
+      onFieldChange
+    })
+
+    const Form = () => <form>
+      <input name="firstName" type="text" {...data(['document', 'firstName'])} placeholder="First Name" />
+      <input name="lastName" type="text" {...data(['document', 'lastName'])} placeholder="Last Name" />
+    </form>
+
+    let root = mount(<Form />)
+    let firstName = root.find({name: 'firstName'})
+    let lastName  = root.find({name: 'lastName' })
+    firstName.simulate('change', {target: {value: 'James'}})
+    lastName .simulate('change', {target: {value: 'Bond'}})
+
+    it('injects correct value props', () => {
+      expect(firstName.prop('value')).toBe('Andy')
+      expect(lastName .prop('value')).toBe('Edwards')
+    })
+    it('injects correct validation props', () => {
+      expect(firstName.prop('validation')).toBe('first name is OK!')
+      expect(lastName .prop('validation')).toBe('last name is OK!')
+    })
+    describe('injected onChange props', () => {
+      it('call onFieldChange', () => {
+        expect(onFieldChange.calls.allArgs()).toEqual([
+          [['document', 'firstName'], 'James'],
+          [['document', 'lastName' ], 'Bond' ]
+        ])
+      })
+    })
+  })
   describe('multi-prop use case', () => {
     let onFieldChange = jasmine.createSpy('onFieldChange')
 
@@ -91,5 +140,56 @@ describe('BindData', () => {
         ])
       })
     })
+  })
+  describe('.sub', () => {
+    it('works', () => {
+      let onFieldChange = jasmine.createSpy('onFieldChange')
+
+      let data = bindData({
+        data: {
+          document: {
+            firstName: 'Andy',
+            lastName: 'Edwards'
+          }
+        },
+        metadata: {
+          validation: {
+            document: {
+              firstName: 'first name is OK!',
+              lastName: 'last name is OK!'
+            }
+          }
+        },
+        onFieldChange
+      }).sub('document')
+
+      const Form = () => <form>
+        <input name="firstName" type="text" {...data('firstName')} placeholder="First Name" />
+        <input name="lastName" type="text" {...data('lastName')} placeholder="Last Name" />
+      </form>
+
+      let root = mount(<Form />)
+      let firstName = root.find({name: 'firstName'})
+      let lastName  = root.find({name: 'lastName' })
+      firstName.simulate('change', {target: {value: 'James'}})
+      lastName .simulate('change', {target: {value: 'Bond'}})
+
+      it('injects correct value props', () => {
+        expect(firstName.prop('value')).toBe('Andy')
+        expect(lastName .prop('value')).toBe('Edwards')
+      })
+      it('injects correct validation props', () => {
+        expect(firstName.prop('validation')).toBe('first name is OK!')
+        expect(lastName .prop('validation')).toBe('last name is OK!')
+      })
+      describe('injected onChange props', () => {
+        it('call onFieldChange', () => {
+          expect(onFieldChange.calls.allArgs()).toEqual([
+            [['document', 'firstName'], 'James'],
+            [['document', 'lastName' ], 'Bond' ]
+          ])
+        })
+      })
+    }) 
   })
 })

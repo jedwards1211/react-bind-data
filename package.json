@@ -1,6 +1,6 @@
 {
   "name": "react-bind-data",
-  "version": "2.0.0-beta2",
+  "version": "2.0.0-beta3",
   "description": "a component that hooks up value, onChange, and other props automatically",
   "main": "lib/index.js",
   "scripts": {
@@ -64,6 +64,7 @@
     "lodash.assign": "^4.0.9",
     "lodash.clonedeep": "^4.3.2",
     "lodash.get": "^4.2.1",
+    "lodash.mapvalues": "^4.4.0",
     "lodash.set": "^4.1.0",
     "lodash.topath": "^4.4.0",
     "lodash.upperfirst": "^4.2.0"

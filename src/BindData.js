@@ -4,6 +4,12 @@ import _get from 'lodash.get'
 import toPath from 'lodash.topath'
 import upperFirst from 'lodash.upperfirst'
 import assign from 'lodash.assign'
+import mapValues from 'lodash.mapvalues'
+
+type BoundData = {
+  (fields: any): Object,
+  sub: (path: any) => BoundData
+}
 
 export default function bindData(options?: {
   data?: any,
@@ -11,12 +17,12 @@ export default function bindData(options?: {
   metadata?: Object,
   omnidata?: Object,
   onFieldChange?: (path: any[], newValue: any) => any
-} = {}): (fields: any) => Object {
+} = {}): BoundData {
   const {data, metadata, omnidata, onFieldChange} = options
 
   const get = options.get || _get
 
-  return function getData(fields: any): Object {
+  function getData(fields: any): Object {
     const result = {}
     if (omnidata) assign(result, omnidata)
 
@@ -42,4 +48,17 @@ export default function bindData(options?: {
 
     return result
   }
+
+  getData.sub = function sub(_path: any) {
+    const path = toPath(_path)
+
+    return bindData({
+      data: get(data, path),
+      metadata: mapValues(metadata, tree => get(tree, path)),
+      omnidata,
+      onFieldChange: onFieldChange && ((subpath, newValue) => onFieldChange([...path, ...subpath], newValue))
+    })
+  }
+
+  return getData
 }
