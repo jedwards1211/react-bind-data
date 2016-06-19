@@ -6,7 +6,7 @@ import cloneDeep from 'lodash.clonedeep'
 
 export default class BindDataSandbox extends Component {
   static propTypes = {
-    children: PropTypes.element.isRequired,
+    children: PropTypes.any.isRequired,
     initState: PropTypes.object
   };
   constructor(props) {
@@ -23,9 +23,13 @@ export default class BindDataSandbox extends Component {
     let {children} = this.props
     let {onFieldChange} = this
 
-    return React.cloneElement(children, {
-      ...this.state,
-      onFieldChange
-    })
+    const childProps = {...this.state, onFieldChange}
+
+    return React.isValidElement(children)
+      ? React.cloneElement(children, {
+        ...this.state,
+        onFieldChange
+      })
+      : children(childProps)
   }
 }
