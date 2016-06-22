@@ -1,6 +1,6 @@
 {
   "name": "react-bind-data",
-  "version": "2.0.0-beta4",
+  "version": "2.0.0-beta5",
   "description": "a component that hooks up value, onChange, and other props automatically",
   "main": "lib/index.js",
   "scripts": {
