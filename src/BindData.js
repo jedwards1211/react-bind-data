@@ -36,7 +36,7 @@ export default function bindData(options?: {
         if (metavalue != null) result[metaprop] = metavalue
       }
       if (onFieldChange) {
-        if (data) {
+        if ('data' in options) {
           const event = prop === 'value' ? 'onChange' : `on${upperFirst(prop)}Change`
           result[event] = e => {
             if (e && e.target instanceof Object) onFieldChange(path, e.target.value)
