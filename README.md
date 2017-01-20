@@ -5,6 +5,7 @@ import BindData from 'react-bind-data';
 ```
 
 (work in progress)
+**(WARNING: these docs are out of date...I was writing this hastily for work, and now that I've been using redux-form instead, I haven't maintained it well)**
 
 ## How it works
 
