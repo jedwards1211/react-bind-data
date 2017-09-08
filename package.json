@@ -61,7 +61,7 @@
     "webpack-merge": "^1.0.2"
   },
   "dependencies": {
-    "lodash.assign": "^4.0.9",
+    "lodash.assign": "^4.2.0",
     "lodash.clonedeep": "^4.3.2",
     "lodash.get": "^4.2.1",
     "lodash.mapvalues": "^4.4.0",
